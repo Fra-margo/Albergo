@@ -1,0 +1,73 @@
+﻿@model Esercizio.Models.ServizioPrenotazione
+@{
+    ViewBag.Title = "Add";
+}
+
+@using (Html.BeginForm("Add", "ServizioPrenotazione", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="m-3">
+        <h3 class="mb-4">Aggiungi servizio alla prenotazione:</h3>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group mb-3">
+            <label for="IdServizio">Servizio:</label>
+            <select name="IdServizio" class="form-control">
+                <option value="">Seleziona un servizio</option>
+                @foreach (var servizio in ViewBag.Servizio)
+                {
+                    <option value="@servizio.IdServizio">@servizio.Descrizione</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="Quantità">Quantità:</label>
+            <input type="text" id="Quantità" name="Quantità" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="DataServizio">Data Servizio:</label>
+            <input type="date" id="DataServizio" name="DataServizio" class="form-control" />
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="IdPrenotazione">ID Prenotazione:</label>
+            <select name="IdPrenotazione" class="form-control">
+                <option value="">Seleziona una prenotazione</option>
+                @foreach (var prenotazione in ViewBag.Prenotazione)
+                {
+                    <option value="@prenotazione.IdPrenotazione">@prenotazione.IdPrenotazione</option>
+                }
+            </select>
+        </div>
+
+        <button class="btn btn-primary mt-3">Aggiungi Servizio</button>
+    </div>
+}
+
+@section scripts{
+    <script>
+        $(function () {
+            $('form').submit(function (event) {
+                var IdServizio = $('select[name="IdServizio"]').val();
+                if (IdServizio === "") {
+
+                    event.preventDefault();
+                    $('#erroreClienteNonSelezionato').show();
+                }
+            });
+        });
+        $(function () {
+            $('form').submit(function (event) {
+                var IdPrenotazione = $('select[name="IdPrenotazione"]').val();
+                if (IdPrenotazione === "") {
+
+                    event.preventDefault();
+                    $('#erroreClienteNonSelezionato').show();
+                }
+            });
+        });
+    </script>
+}

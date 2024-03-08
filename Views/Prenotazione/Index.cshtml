@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="mb-4">Sezione Amministrativa</h2>
+<div class="d-flex align-items-center flex-column">
+    <h4>Cosa desideri fare?</h4>
+    <div class="d-flex justify-content-md-evenly align-item-center w-100 mt-3">
+        <p>
+            @Html.ActionLink("Aggiungi nuovo cliente", "AddCliente", "Prenotazione")
+        </p>
+        <p>
+            @Html.ActionLink("Aggiungi nuova prenotazione", "AddPrenotazione", "Prenotazione")
+        </p>
+        <p>
+            @Html.ActionLink("Visualizza tutte le prenotazioni", "AllPrenotazioni", "Prenotazione")
+        </p>
+        <p>
+            @Html.ActionLink("Aggiungi servizi", "Add", "ServizioPrenotazione")
+        </p>
+    </div>
+</div>

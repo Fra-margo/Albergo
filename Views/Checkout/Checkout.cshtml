@@ -1,0 +1,46 @@
+﻿@model Esercizio.Models.Prenotazione
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 class="mt-3">Dettagli della prenotazione</h2>
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-title">Numero di stanza: @ViewBag.Prenotazione.NumeroCamera</p>
+                    <p class="card-text">Periodo: @ViewBag.Prenotazione.DataArrivo.ToShortDateString() - @ViewBag.Prenotazione.DataPartenza.ToShortDateString()</p>
+                    <p class="card-text">Tariffa applicata: @ViewBag.Prenotazione.TotaleDaPagare €</p>
+                </div>
+            </div>
+            <h2 class="mt-3">Servizi aggiuntivi</h2>
+            <ul class="list-group">
+                @foreach (var servizio in ViewBag.ServiziAggiuntivi)
+                {
+                    <li class="list-group-item">@servizio.Descrizione - Prezzo: @servizio.Prezzo €</li>
+                }
+            </ul>
+            <h2 class="mt-3">Importo totale da pagare</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">@ViewBag.ImportoTotale €</h3>
+                    <button type="button" class="btn btn-danger" id="btnDelete">Concludi e cancella Prenotazione</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $("#btnDelete").click(function () {
+                if (confirm("Sei sicuro di voler cancellare questa prenotazione?")) {
+                    var idPrenotazione = "@ViewBag.Prenotazione.IdPrenotazione";
+                    window.location.href = "@Url.Action("Delete", "Checkout")?IdPrenotazione=" + idPrenotazione;
+                }
+            });
+        });
+    </script>
+}

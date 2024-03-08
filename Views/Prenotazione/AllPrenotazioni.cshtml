@@ -1,0 +1,53 @@
+﻿@model List<Esercizio.Models.Prenotazione>
+
+@{
+    ViewBag.Title = "Tutte le Prenotazioni";
+}
+
+<div class="container">
+    <h2>Tutte le Prenotazioni</h2>
+    @if (Model.Count == 0)
+    {
+        <p>Nessuna prenotazione trovata.</p>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Data Prenotazione</th>
+                    <th>Anno</th>
+                    <th>Data Arrivo</th>
+                    <th>Data Partenza</th>
+                    <th>Caparra Confirmatoria</th>
+                    <th>Tariffa Applicata</th>
+                    <th>Tipo Soggiorno</th>
+                    <th>Cliente</th>
+                    <th>Camera</th>
+                    <th>Totale da Pagare</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var prenotazione in Model)
+                {
+                    <tr>
+                        <td>@prenotazione.IdPrenotazione</td>
+                        <td>@prenotazione.DataPrenotazione.ToShortDateString()</td>
+                        <td>@prenotazione.Anno</td>
+                        <td>@prenotazione.DataArrivo.ToShortDateString()</td>
+                        <td>@prenotazione.DataPartenza.ToShortDateString()</td>
+                        <td>@prenotazione.CaparraConfirmatoria.ToString("C")</td>
+                        <td>@prenotazione.TariffaApplicata.ToString("C")</td>
+                        <td>@prenotazione.TipoSoggiorno</td>
+                        <td>@prenotazione.CodiceFiscale</td>
+                        <td>@prenotazione.NumeroCamera</td>
+                        <td>@prenotazione.TotaleDaPagare.ToString("C")</td>
+                        <td><a href="@Url.Action("Checkout", "Checkout", new { idPrenotazione = prenotazione.IdPrenotazione })" class="btn btn-primary btn-sm">Checkout</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>
