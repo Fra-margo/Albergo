@@ -1,12 +1,33 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Applicazione ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <style>
+        html, body {
+            height: 100%;
+        }
+
+        .wrapper {
+            min-height: 90%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .body-content {
+            flex: 1;
+        }
+
+        footer {
+            flex-shrink: 0;
+            border-top: 1px solid #ccc;
+            padding-top: 10px
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark">
@@ -18,7 +39,6 @@
             </button>
             <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1 d-flex justify-content-between">
-
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li>@Html.ActionLink("Amministrazione", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
@@ -34,11 +54,14 @@
             </div>
         </div>
     </nav>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
+    <div class="wrapper">
+        <div class="container body-content">
+            @RenderBody()
+        </div>
         <footer>
-            <p>&copy; @DateTime.Now.Year - AlbergoTuttoMio.NET</p>
+            <div class="container">
+                <p>&copy; @DateTime.Now.Year - AlbergoTuttoMio.NET</p>
+            </div>
         </footer>
     </div>
 

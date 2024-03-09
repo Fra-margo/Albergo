@@ -2,21 +2,53 @@
     ViewBag.Title = "Index";
 }
 
-<h2 class="mb-4">Sezione Amministrativa</h2>
-<div class="d-flex align-items-center flex-column">
-    <h4>Cosa desideri fare?</h4>
-    <div class="d-flex justify-content-md-evenly align-item-center w-100 mt-3">
-        <p>
-            @Html.ActionLink("Aggiungi nuovo cliente", "AddCliente", "Prenotazione")
-        </p>
-        <p>
-            @Html.ActionLink("Aggiungi nuova prenotazione", "AddPrenotazione", "Prenotazione")
-        </p>
-        <p>
-            @Html.ActionLink("Visualizza tutte le prenotazioni", "AllPrenotazioni", "Prenotazione")
-        </p>
-        <p>
-            @Html.ActionLink("Aggiungi servizi", "Add", "ServizioPrenotazione")
-        </p>
+<div class="container">
+    <h2 class="mb-4 text-center">Sezione Amministrativa</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Gestione Clienti</h4>
+                    <p class="card-text">Aggiungi un nuovo cliente.</p>
+                    <div class="text-center">
+                        <a href="@Url.Action("AddCliente", "Prenotazione")" class="btn btn-primary btn-lg">Nuovo Cliente</a>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Gestione Prenotazioni</h4>
+                    <p class="card-text">Aggiungi una nuova prenotazione, visualizza tutte le prenotazioni.</p>
+                    <div class="text-center">
+                        <a href="@Url.Action("AddPrenotazione", "Prenotazione")" class="btn btn-primary btn-lg">Nuova Prenotazione</a>
+                        <a href="@Url.Action("AllPrenotazioni", "Prenotazione")" class="btn btn-primary btn-lg">Tutte le prenotazioni</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Gestione Servizi</h4>
+                    <p class="card-text">Aggiungi nuovi servizi alle prenotazioni.</p>
+                    <div class="text-center">
+                        <a href="@Url.Action("Add", "ServizioPrenotazione")" class="btn btn-primary btn-lg">Nuovi Servizi</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h4 class="card-title">Ricerche</h4>
+                    <p class="card-text">Effettua ricerche per codice fiscale e prenotazioni per pensione completa.</p>
+                    <div class="text-center">
+                        <a href="@Url.Action("Index", "Ricerca")" class="btn btn-primary btn-lg">Effettua Ricerche</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

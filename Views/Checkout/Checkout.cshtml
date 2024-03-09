@@ -5,24 +5,31 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <h2 class="mt-3">Dettagli della prenotazione</h2>
-            <div class="card">
+            <div class="card mb-4">
                 <div class="card-body">
-                    <p class="card-title">Numero di stanza: @ViewBag.Prenotazione.NumeroCamera</p>
+                    <h5 class="card-title">Numero di stanza: @ViewBag.Prenotazione.NumeroCamera</h5>
                     <p class="card-text">Periodo: @ViewBag.Prenotazione.DataArrivo.ToShortDateString() - @ViewBag.Prenotazione.DataPartenza.ToShortDateString()</p>
-                    <p class="card-text">Tariffa applicata: @ViewBag.Prenotazione.TotaleDaPagare €</p>
+                    <p class="card-text">Totale pre-checkout: @ViewBag.Prenotazione.TotaleDaPagare €</p>
                 </div>
             </div>
+        </div>
+        <div class="col-md-6">
             <h2 class="mt-3">Servizi aggiuntivi</h2>
             <ul class="list-group">
                 @foreach (var servizio in ViewBag.ServiziAggiuntivi)
                 {
-                    <li class="list-group-item">@servizio.Descrizione - Prezzo: @servizio.Prezzo €</li>
+                    <li class="list-group-item">Servizio: @servizio.Descrizione | Quantità: @servizio.Quantità | Prezzo: @servizio.Prezzo €</li>
                 }
             </ul>
-            <h2 class="mt-3">Importo totale da pagare</h2>
-            <div class="card">
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <h2>Importo totale da pagare</h2>
+            <div class="card mb-4">
                 <div class="card-body">
                     <h3 class="card-title">@ViewBag.ImportoTotale €</h3>
                     <button type="button" class="btn btn-danger" id="btnDelete">Concludi e cancella Prenotazione</button>
@@ -30,17 +37,30 @@
             </div>
         </div>
     </div>
+
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <p>@Html.ActionLink("Torna indietro", "AllPrenotazioni", "Prenotazione")</p>
+        </div>
+    </div>
 </div>
 
 @section scripts {
     <script>
-        $(document).ready(function () {
-            $("#btnDelete").click(function () {
-                if (confirm("Sei sicuro di voler cancellare questa prenotazione?")) {
-                    var idPrenotazione = "@ViewBag.Prenotazione.IdPrenotazione";
-                    window.location.href = "@Url.Action("Delete", "Checkout")?IdPrenotazione=" + idPrenotazione;
-                }
-            });
+    $(document).ready(function () {
+        $("#btnDelete").click(function () {
+            if (confirm("Sei sicuro di voler cancellare questa prenotazione?")) {
+                var idPrenotazione = @Html.Raw(Json.Encode(ViewBag.Prenotazione.IdPrenotazione));
+                $.post("@Url.Action("Delete", "Checkout")", { IdPrenotazione: idPrenotazione })
+                    .done(function (data) {
+                        window.location.href = "@Url.Action("ConfermaDelete", "Checkout")";
+                    })
+                    .fail(function () {
+                        alert("Si è verificato un errore durante la cancellazione della prenotazione.");
+                    });
+                console.log("ID Prenotazione:", idPrenotazione);
+            }
         });
+    });
     </script>
 }

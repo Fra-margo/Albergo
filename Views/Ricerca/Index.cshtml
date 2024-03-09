@@ -1,0 +1,60 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="mb-4">Sezione Ricerca</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <h4>Ricerca Cliente per Codice Fiscale</h4>
+        <div class="input-group mb-3">
+            <input type="text" id="codiceFiscale" class="form-control" placeholder="Inserisci il codice fiscale">
+            <button id="btnRicercaCodiceFiscale" class="btn btn-primary">Ricerca</button>
+        </div>
+        <div id="risultatoCodiceFiscale"></div>
+    </div>
+    <div class="col-md-6">
+        <h4>Numero Totale di Prenotazioni per Pensione Completa</h4>
+        <div id="risultatoPensioneCompleta"></div>
+    </div>
+</div>
+<p class="mt-3">@Html.ActionLink("Torna indietro", "Index", "Prenotazione")</p>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#btnRicercaCodiceFiscale').click(function () {
+                var codiceFiscale = $('#codiceFiscale').val();
+                $.getJSON('@Url.Action("RicercaCodiceFiscale", "Ricerca")', { CodiceFiscale: codiceFiscale }, function (data) {
+                    if (data.length > 0) {
+                        var cliente = data[0];
+                        $('#risultatoCodiceFiscale').html('<div class="card">' +
+                            '<div class="card-body">' +
+                            '<h5 class="card-title">Informazioni Cliente</h5>' +
+                            '<p class="card-text"><strong>Cognome:</strong> ' + cliente.Cognome + '</p>' +
+                            '<p class="card-text"><strong>Nome:</strong> ' + cliente.Nome + '</p>' +
+                            '<p class="card-text"><strong>Città:</strong> ' + cliente.Città + '</p>' +
+                            '<p class="card-text"><strong>Provincia:</strong> ' + cliente.Provincia + '</p>' +
+                            '<p class="card-text"><strong>Email:</strong> ' + cliente.Email + '</p>' +
+                            '<p class="card-text"><strong>Telefono:</strong> ' + (cliente.Telefono ? cliente.Telefono : 'Non disponibile') + '</p>' +
+                            '<p class="card-text"><strong>Cellulare:</strong> ' + cliente.Cellulare + '</p>' +
+                            '</div>' +
+                            '</div>');
+                    } else {
+                        $('#risultatoCodiceFiscale').html('<div class="alert alert-warning" role="alert">Nessun cliente trovato con questo codice fiscale.</div>');
+                    }
+                });
+            });
+
+            $.getJSON('@Url.Action("RicercaPensioneCompleta", "Ricerca")', function (data) {
+                $('#risultatoPensioneCompleta').html('<div class="card">' +
+                    '<div class="card-body">' +
+                    '<h5 class="card-title">Numero Totale:</h5>' +
+                    '<p class="card-text">' + data + '</p>' +
+                    '</div>' +
+                    '</div>');
+            });
+        });
+    </script>
+}

@@ -10,5 +10,6 @@ namespace Esercizio.Models
         public int IdServizio { get; set; }
         public string Descrizione { get; set; }
         public decimal Prezzo { get; set; }
+        public int Quantità { get; set; }
     }
 }

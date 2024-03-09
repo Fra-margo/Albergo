@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Esercizio.Controllers
@@ -47,8 +46,8 @@ namespace Esercizio.Controllers
                 }
                 reader.Close();
 
-                
-                query = "SELECT s.* FROM Servizi s INNER JOIN Servizi_Prenotazioni sp ON s.IdServizio = sp.IdServizio WHERE sp.IdPrenotazione = @IdPrenotazione";
+
+                query = "SELECT s.*, sp.Quantità FROM Servizi s INNER JOIN Servizi_Prenotazioni sp ON s.IdServizio = sp.IdServizio WHERE sp.IdPrenotazione = @IdPrenotazione";
                 command = new SqlCommand(query, conn);
                 command.Parameters.AddWithValue("@IdPrenotazione", idPrenotazione);
                 reader = command.ExecuteReader();
@@ -59,17 +58,19 @@ namespace Esercizio.Controllers
                     {
                         IdServizio = (int)reader["IdServizio"],
                         Descrizione = (string)reader["Descrizione"],
-                        Prezzo = (decimal)reader["Prezzo"]
+                        Prezzo = (decimal)reader["Prezzo"],
+                        Quantità = (int)reader["Quantità"]
                     };
                     serviziAggiuntivi.Add(servizio);
                 }
                 reader.Close();
             }
+            decimal costoTotaleServizi = serviziAggiuntivi.Sum(s => s.Prezzo * s.Quantità);
 
-            
-            decimal importoTotale = prenotazione.TotaleDaPagare + serviziAggiuntivi.Sum(s => s.Prezzo);
 
-            
+            decimal importoTotale = prenotazione.TotaleDaPagare + costoTotaleServizi;
+
+
             ViewBag.Prenotazione = prenotazione;
             ViewBag.ServiziAggiuntivi = serviziAggiuntivi;
             ViewBag.ImportoTotale = importoTotale;
@@ -78,30 +79,31 @@ namespace Esercizio.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int IdPrenotazione)
+        public ActionResult Delete(int idPrenotazione)
         {
             string connString = ConfigurationManager.ConnectionStrings["Hotel"].ToString();
 
             using (var conn = new SqlConnection(connString))
             {
                 conn.Open();
+
                 var deleteServiziQuery = "DELETE FROM Servizi_Prenotazioni WHERE IdPrenotazione = @IdPrenotazione";
                 var deleteServiziCommand = new SqlCommand(deleteServiziQuery, conn);
-                deleteServiziCommand.Parameters.AddWithValue("@IdPrenotazione", IdPrenotazione);
+                deleteServiziCommand.Parameters.AddWithValue("@IdPrenotazione", idPrenotazione);
                 deleteServiziCommand.ExecuteNonQuery();
-            }
 
-            using (var conn = new SqlConnection(connString))
-            {
-                conn.Open();
                 var deletePrenotazioneQuery = "DELETE FROM Prenotazioni WHERE IdPrenotazione = @IdPrenotazione";
                 var deletePrenotazioneCommand = new SqlCommand(deletePrenotazioneQuery, conn);
-                deletePrenotazioneCommand.Parameters.AddWithValue("@IdPrenotazione", IdPrenotazione);
+                deletePrenotazioneCommand.Parameters.AddWithValue("@IdPrenotazione", idPrenotazione);
                 deletePrenotazioneCommand.ExecuteNonQuery();
             }
 
-            return RedirectToAction("Index", "Prenotazione");
+            return RedirectToAction("ConfermaDelete");
+        }
+
+        public ActionResult ConfermaDelete()
+        {
+            return View();
         }
     }
 }

@@ -123,6 +123,7 @@
     <Compile Include="Controllers\CheckoutController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PrenotazioneController.cs" />
+    <Compile Include="Controllers\RicercaController.cs" />
     <Compile Include="Controllers\ServizioPrenotazioneController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -190,6 +191,8 @@
     <Content Include="Views\Prenotazione\AllPrenotazioni.cshtml" />
     <Content Include="Views\ServizioPrenotazione\Add.cshtml" />
     <Content Include="Views\Checkout\Checkout.cshtml" />
+    <Content Include="Views\Checkout\ConfermaDelete.cshtml" />
+    <Content Include="Views\Ricerca\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

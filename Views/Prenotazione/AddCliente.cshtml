@@ -1,48 +1,55 @@
-﻿
-@using (Html.BeginForm("AddCliente", "Prenotazione", FormMethod.Post))
+﻿@using (Html.BeginForm("AddCliente", "Prenotazione", FormMethod.Post, new { @class = "m-3" }))
 {
     @Html.AntiForgeryToken()
 
-<div class="m-3">
-    <h3 class="mb-4">Inserisci dati cliente:</h3>
+    <div class="mb-4">
+        <h3>Inserisci dati cliente:</h3>
+    </div>
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        <label>Nome:</label>
-        <input name="Nome" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Cognome:</label>
-        <input name="Cognome" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Codice Fiscale:</label>
-        <input name="CodiceFiscale" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Città:</label>
-        <input name="Città" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Provincia:</label>
-        <input name="Provincia" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>E-mail:</label>
-        <input name="Email" type="email" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Telefono:</label>
-        <input name="Telefono" type="text" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label>Cellulare:</label>
-        <input name="Cellulare" type="text" class="form-control" />
-    </div>
-    <button class="mt-3">Inserisci </button>
 
-    <p>@Html.ActionLink("Torna indietro", "Index", "Prenotazione")</p>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Nome">Nome:</label>
+                <input name="Nome" id="Nome" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Cognome">Cognome:</label>
+                <input name="Cognome" id="Cognome" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="CodiceFiscale">Codice Fiscale:</label>
+                <input name="CodiceFiscale" id="CodiceFiscale" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Città">Città:</label>
+                <input name="Città" id="Città" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Provincia">Provincia:</label>
+                <input name="Provincia" id="Provincia" type="text" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Email">E-mail:</label>
+                <input name="Email" id="Email" type="email" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Telefono">Telefono:</label>
+                <input name="Telefono" id="Telefono" type="text" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label for="Cellulare">Cellulare:</label>
+                <input name="Cellulare" id="Cellulare" type="text" class="form-control" />
+            </div>
+        </div>
+    </div>
 
-</div>
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Inserisci</button>
+    </div>
+
+    <p class="mt-3">@Html.ActionLink("Torna indietro", "Index", "Prenotazione")</p>
 }
-
-
