@@ -1,3 +1,16 @@
+This project serves for managing room reservations. The page allows access only to authorized users through a login.
+It is possible to add new clients to the database, create a new reservation, and view all existing ones.
+For each reservation, additional services can be added, and at checkout, all reservation details and the fee to be paid by the client are displayed.
+Additionally, two searches can be performed using asynchronous calls as requested by the task.
+I focused more on functionality rather than aesthetics to give more space to the implementation of the newly learned features.
+
+
+Questo progetto serve per la gestione delle prenotazioni delle camere. La pagina permette di accedere solo agli utenti autorizzati tramite un Login.
+E' possibile inserire dei nuovi clienti all'interno del database dell'albero, è possibile creare una nuova prenotazione e visualizzare tutte quelle presenti. 
+Per ogni prenotazione, si possono aggiungere dei servizi addizionali e nel momento del checkout, vengono visualizzati tutti i dettagli della prenotazione e la tariffa da pagare per il cliente.
+Inoltre è possibile effettuare due ricerche con delle chiamate asincrone come richiesto dal compito. 
+Ho dato maggiore attenzione alle funzionalità, piuttosto che all'estetica, per dare più spazio all'implementazione delle nuove funzionalità appena imparate.
+
 Qui sono contenute le query necessarie per creare le tabelle del database:
 
 CREATE TABLE Camere (
